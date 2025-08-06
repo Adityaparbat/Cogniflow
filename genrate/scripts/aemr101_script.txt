@@ -1,0 +1,105 @@
+Scene: Introduction
+Pet: "Hello, young learners! Welcome to our exciting educational journey today! 
+        We're going to explore some wonderful concepts together. 
+        Get ready to learn, discover, and have fun as we dive into this amazing lesson!"
+
+Scene: Learning Point 1
+Pet: "Let's learn about: Two little legs go tap, tap, tap
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Two little legs go tap, tap, tap - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 2
+Pet: "Let's learn about: Two little eyes are open wide
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Two little eyes are open wide - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 3
+Pet: "Let's learn about: One little head goes side to side
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                One little head goes side to side - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 4
+Pet: "Let's learn about: Reprint 2025-26 Chapter 1
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Reprint 2025-26 Chapter 1 - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 5
+Pet: "Let's learn about: indd 1 11-01-2024 04:14:39 Two little eyes to look around
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                indd 1 11-01-2024 04:14:39 Two little eyes to look around - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 6
+Pet: "Let's learn about: Two little ears to hear any sound
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Two little ears to hear any sound - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Interactive Practice
+Pet: "Now let's practice what we've learned! 
+        
+        This is where the fun really begins. Let's work together to understand these concepts better.
+        
+        Can you think of examples from your own life? 
+        How do you see these ideas in the world around you?
+        
+        Take a moment to reflect on what we've learned so far.
+        What questions do you have? What would you like to explore further?"
+
+Scene: Summary and Conclusion
+Pet: "Excellent work today! Let's review what we've learned.
+        
+        We've covered some really important concepts together.
+        Remember, learning is a journey, and every step forward is progress.
+        
+        Keep exploring, keep asking questions, and keep growing!
+        You're doing amazing work, and I'm so proud of your effort today.
+        
+        Thank you for learning with me! See you next time for more exciting discoveries!"
+
