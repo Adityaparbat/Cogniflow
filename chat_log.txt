@@ -1,0 +1,123 @@
+
+[2025-07-29 10:58:32.579090]
+User: hi
+Bot: Nice to see you! What topic are you curious about today?
+
+[2025-07-29 10:59:35.578905]
+User: how are you
+Bot: Hi there! I'm ready to help you learn. 📚
+
+[2025-07-29 11:00:59.197954]
+User: what is photosynthesis
+Bot: Hi there! 😊
+
+Photosynthesis is how plants make their own food! 
+
+**Simply put:** Plants use sunlight, water, and carbon dioxide to create sugar (their food) and release oxygen as a byproduct. 
+
+Think of it like this:
+
+*   **Sunlight:** Provides the energy.
+*   **Water & Carbon Dioxide:** The ingredients.
+*   **Sugar:** The food for the plant.
+*   **Oxygen:**  A helpful "waste" product that we breathe!
+
+It's super important for life on Earth because it provides the oxygen we need to survive!
+
+
+
+Do you have any other questions about photosynthesis? I'm happy to help! ✨
+
+
+
+
+
+[2025-07-29 11:01:24.010655]
+User: virat kohli
+Bot: Hey there! 😊
+
+Virat Kohli is a **world-famous Indian cricketer**. He's widely considered one of the greatest batsmen of all time! 
+
+He's known for his aggressive batting style, incredible fitness, and passionate leadership. He's captained the Indian cricket team in many formats.
+
+Is there anything specific you'd like to know about him? I can tell you about his stats, career highlights, or anything else! Just ask! ✨
+
+
+
+
+
+[2025-07-29 11:40:08.863181]
+User: hi
+Bot: Nice to see you! What topic are you curious about today?
+
+[2025-07-29 11:40:27.510724]
+User: shivaji maharaj
+Bot: Hi there! I'm ready to help you learn.
+
+[2025-07-29 11:41:20.284911]
+User: capital of maharashtra\
+Bot: The capital of Maharashtra is **Mumbai**. 😊 
+
+Is there anything else I can help you with today? ✨
+
+
+
+
+
+[2025-07-29 11:45:13.644764]
+User: what is the capital of france
+Bot: Hi there! 😊
+
+The capital of France is **Paris**! 🇫🇷 
+
+Is there anything else I can help you with today? ✨
+
+
+
+
+
+[2025-07-29 11:56:35.044619]
+User: 2
+Bot: Hi there! 😊
+
+You've just written the number 2! 
+
+Is there anything specific you'd like to know about the number 2, or anything else I can help you with?  For example, we could talk about:
+
+* **Math:**  2 + 2 = 4,  2 x 2 = 4, etc.
+* **Facts about the number 2:** It's a prime number!
+* **Something else entirely!** Just let me know!
+
+
+
+Just tell me what you're curious about! ✨
+
+
+
+
+
+[2025-07-29 11:58:26.695730]
+User: 2+2*4/6/2
+Bot: Okay, let's solve this step-by-step using the order of operations (PEMDAS/BODMAS):
+
+1. **Multiplication and Division** (from left to right):
+   * 2 * 4 = 8
+   * 8 / 6 = 1.333... (approximately)
+   * 1.333... / 2 = 0.666... (approximately)
+
+2. **Addition:**
+   * 2 + 0.666... = 2.666...
+
+Therefore, 2 + 2 * 4 / 6 / 2 = **2.67** (rounded to two decimal places).
+
+
+
+Let me know if you'd like to practice another problem! 😊
+
+
+
+
+
+[2025-07-29 12:00:55.096315]
+User: who was the shivaji maharaj
+Bot: Nice to see you! What topic are you curious about today?
