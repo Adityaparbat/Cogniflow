@@ -74,13 +74,13 @@ A modern, AI-powered educational dashboard that transforms PDF content into inte
 
 6. **Open your browser**
    ```
-   http://localhost:3000
+   Open Network:{your network link}
    ```
 7. **To open video generator**
    ```bash
    cd genrate
    npm install
-   npm start
+   node server.js
    ```
 8. **Open your browser**
    ```
