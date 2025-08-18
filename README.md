@@ -76,7 +76,17 @@ A modern, AI-powered educational dashboard that transforms PDF content into inte
    ```
    http://localhost:3000
    ```
-
+7. **To open video generator**
+   ```bash
+   cd genrate
+   npm install
+   npm start
+   ```
+8. **Open your browser**
+   ```
+   https://localhost:3003
+   ```
+   
 ## 📋 Available Commands
 
 ### Development Commands
