@@ -1305,15 +1305,15 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
                           sound.playButtonClick();
                           
                           try {
-                            // Check if genrate server is running
-                            const response = await fetch('http://localhost:3000/api/chapters/english', { 
+                            // Check if genrate server is running on port 3003
+                            const response = await fetch('http://localhost:3003/api/chapters/english', { 
                               method: 'GET',
                               timeout: 3000
                             });
                             
                             if (response.ok) {
                               // Server is running, open the app
-                              window.open('http://localhost:3000', '_blank');
+                              window.open('http://localhost:3003', '_blank');
                               alert('🎬 Video Learning Platform opened!\n\nThe AI video generator is now running in a new tab.');
                             } else {
                               throw new Error('Server not responding');
@@ -1326,18 +1326,19 @@ To use the AI video generator:
 
 1. Open a terminal in the genrate folder
 2. Run the following command:
-   node server.js
+   npm start
 
-3. Wait for "Server running on port 3000" message
+3. Wait for the webpack dev server to start on port 3002
 4. Click this button again to open the platform
 
-The genrate app will run on http://localhost:3000`;
+The genrate app will run on http://localhost:3002
+Note: The API server runs on port 3003`;
                             
                             alert(instructions);
                             
                             // Still try to open the URL in case user wants to start it manually
                             if (confirm('Would you like to open the URL anyway? (You can bookmark it for later)')) {
-                              window.open('http://localhost:3000', '_blank');
+                              window.open('http://localhost:3003', '_blank');
                             }
                           }
                         }}

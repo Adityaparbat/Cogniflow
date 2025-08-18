@@ -7,7 +7,7 @@ const { promisify } = require('util');
 
 const execAsync = promisify(exec);
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 
 // Middleware
 app.use(express.json());
@@ -51,7 +51,7 @@ app.post('/api/extract-text', async (req, res) => {
     console.log('Using Python script: pdf_script_enhanced.py');
     
     // Call Python script for text extraction
-    const { stdout, stderr } = await execAsync(`C:\\Users\\anita\\OneDrive\\Desktop\\genrate\\env\\Scripts\\python.exe pdf_script_enhanced.py "${fullPath}"`);
+    const { stdout, stderr } = await execAsync(`python pdf_script_enhanced.py "${fullPath}"`);
     
     if (stderr) {
       console.error('Python script error:', stderr);
@@ -92,7 +92,7 @@ app.post('/api/generate-video', async (req, res) => {
       console.log('Corrected script path:', actualScriptPath);
     }
     
-    const { stdout, stderr } = await execAsync(`C:\\Users\\anita\\OneDrive\\Desktop\\genrate\\env\\Scripts\\python.exe complete_video_current.py "${actualScriptPath}" "${outputPath}"`);
+    const { stdout, stderr } = await execAsync(`python complete_video_current.py "${actualScriptPath}" "${outputPath}"`);
     
     if (stderr) {
       console.error('Video generation error:', stderr);
