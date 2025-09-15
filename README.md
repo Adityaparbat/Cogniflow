@@ -1,4 +1,4 @@
-# 📚 CogniFlow - Interactive Learning Dashboard
+# 📚 CogniFlow - Interactive Learning Dashboard (offline AI powered education system)
 
 A modern, AI-powered educational dashboard that transforms PDF content into interactive quizzes and flashcards. Built with Next.js, TypeScript, and Tailwind CSS.
 
