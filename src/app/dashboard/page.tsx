@@ -55,7 +55,7 @@ import WordAssociation from '@/components/WordAssociation';
 import PDFBrowser from '@/components/PDFBrowser';
 import StudyPlan from '@/components/StudyPlan';
 import LearningGoals from '@/components/LearningGoals';
-import ProgressReport from '@/components/ProgressReport';
+// import ProgressReport from '@/components/ProgressReport';
 import StreakTracker from '@/components/StreakTracker';
 import StudyTimer from '@/components/StudyTimer';
 import LearningResources from '@/components/LearningResources';
@@ -301,7 +301,7 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
   const [availablePDFContent, setAvailablePDFContent] = useState<any[]>([]);
   const [showStudyPlan, setShowStudyPlan] = useState(false);
   const [showLearningGoals, setShowLearningGoals] = useState(false);
-  const [showProgressReport, setShowProgressReport] = useState(false);
+  // const [showProgressReport, setShowProgressReport] = useState(false);
   const [showStreakTracker, setShowStreakTracker] = useState(false);
   const [showStudyTimer, setShowStudyTimer] = useState(false);
   const [showLearningResources, setShowLearningResources] = useState(false);
@@ -626,10 +626,7 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
     setShowLearningGoals(true);
   };
 
-  const handleViewProgressReport = () => {
-    sound.playButtonClick();
-    setShowProgressReport(true);
-  };
+  // Removed handleViewProgressReport in favor of downloadable report in Progress tab
 
   const handleViewStreakTracker = () => {
     sound.playButtonClick();
@@ -697,24 +694,58 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
     }
   }, [user]);
 
-  // Generate chart data
-  const chartData = subjects.map(subject => ({
-    name: subject.name,
-    value: subject.progress,
-    color: subject.color,
-    icon: subject.icon
-  }));
+  // Generate chart data from real user stats (live)
+  const chartData = (() => {
+    if (!user?.stats?.subjects) return [];
+    const subjectEntries = Object.entries(user.stats.subjects) as Array<[string, any]>;
+    // Map user subjects to chart-friendly items; use fallback colors/icons
+    const fallback = [
+      { color: 'bg-blue-500', icon: '📘' },
+      { color: 'bg-green-500', icon: '🧪' },
+      { color: 'bg-purple-500', icon: '📚' },
+      { color: 'bg-yellow-500', icon: '🌍' }
+    ];
+    return subjectEntries.map(([name, stats], index) => ({
+      name,
+      value: Math.round(stats.progress || 0),
+      color: fallback[index % fallback.length].color,
+      icon: fallback[index % fallback.length].icon
+    }));
+  })();
 
-  // Generate weekly activity data
-  const weeklyData = [
-    { day: 'Mon', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Tue', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Wed', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Thu', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Fri', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Sat', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 },
-    { day: 'Sun', activities: Math.floor(Math.random() * 5) + 2, xp: Math.floor(Math.random() * 100) + 50, time: Math.floor(Math.random() * 60) + 30 }
-  ];
+  // Generate weekly activity from real sessions in the last 7 days (live)
+  const weeklyData = (() => {
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const init = Array.from({ length: 7 }, (_, d) => ({ day: days[d], activities: 0, xp: 0, time: 0 }));
+    const sessions = user?.stats?.timeTracking?.sessionHistory || [];
+    const now = new Date();
+    const sevenDaysAgo = new Date(now);
+    sevenDaysAgo.setDate(now.getDate() - 6);
+    sessions.forEach((s: any) => {
+      const d = new Date(s.endTime || s.startTime || now);
+      if (d >= sevenDaysAgo && d <= now) {
+        const idx = d.getDay();
+        init[idx].activities += 1;
+        init[idx].time += Math.round(s.duration || 0);
+        init[idx].xp += Math.round(s.xpEarned || 0);
+      }
+    });
+    return init;
+  })();
+
+  // Live-refresh user state if it changes in another tab/process
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'user' && e.newValue) {
+        try {
+          const updated = JSON.parse(e.newValue);
+          if (updated?.id === user?.id) setUser(updated);
+        } catch {}
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [user?.id]);
 
   if (!user) {
     return (
@@ -985,14 +1016,7 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
                   <Target className="w-5 h-5" />
                   Set Learning Goals
                 </button>
-                <button 
-                  onClick={handleViewProgressReport}
-                  onMouseEnter={() => sound.playHover()}
-                  className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-xl font-semibold text-base hover:from-purple-600 hover:to-pink-600 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl flex-1 max-w-[250px] justify-center"
-                >
-                  <TrendingUp className="w-5 h-5" />
-                  View Progress Report
-                </button>
+                
                 <button 
                   onClick={() => {
                     sound.playButtonClick();
@@ -1151,7 +1175,7 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
 
         {activeTab === 'personalized' && (
           <div className="space-y-8">
-            <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 rounded-2xl p-8 shadow-2xl border-0">
+            <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 rounded-2xl p-10 md:p-12 lg:p-14 shadow-2xl border-0 min-h-[560px]">
               {/* Header */}
               <div className="flex flex-col items-center mb-8">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-lg mb-4 animate-pulse">
@@ -1161,166 +1185,46 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
                 <p className="text-lg text-purple-700 text-center">Your learning journey, tailored just for you!</p>
               </div>
 
-              {/* Learning Path Recommendations */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4">Recommended Learning Path</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {[
-                    { 
-                      title: 'Strengthen Weak Areas', 
-                      description: 'Focus on subjects where you need improvement',
-                      icon: '🎯',
-                      color: 'bg-red-500',
-                      progress: 65,
-                      action: 'Start Practice'
-                    },
-                    { 
-                      title: 'Advanced Topics', 
-                      description: 'Challenge yourself with higher-level concepts',
-                      icon: '🚀',
-                      color: 'bg-blue-500',
-                      progress: 40,
-                      action: 'Explore'
-                    },
-                    { 
-                      title: 'Review & Reinforce', 
-                      description: 'Solidify your understanding of core concepts',
-                      icon: '🔄',
-                      color: 'bg-green-500',
-                      progress: 80,
-                      action: 'Review'
-                    }
-                  ].map((path, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      className="bg-white rounded-xl p-6 shadow-lg border cursor-pointer hover:shadow-xl transition-all duration-300"
-                    >
-                      <div className={`w-12 h-12 ${path.color} rounded-lg flex items-center justify-center mb-4`}>
-                        <span className="text-xl">{path.icon}</span>
-                      </div>
-                      <h5 className="text-lg font-bold text-gray-900 mb-2">{path.title}</h5>
-                      <p className="text-gray-600 text-sm mb-4">{path.description}</p>
-                      <div className="mb-4">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span className="text-gray-600">Progress</span>
-                          <span className="text-gray-900 font-medium">{path.progress}%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className={`${path.color} h-2 rounded-full transition-all duration-500`}
-                            style={{ width: `${path.progress}%` }}
-                          ></div>
+              
+
+              
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* AI Video Learning Platform Card */}
+                <div className="mb-0">
+                  <h4 className="text-xl font-bold text-gray-900 mb-4">🎬 AI Video Learning Platform</h4>
+                  <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200 h-full">
+                    <div className="flex flex-col items-start h-full">
+                      <div className="w-full mb-4">
+                        <h5 className="text-lg font-bold text-gray-900 mb-2">Generate Educational Videos</h5>
+                        <p className="text-gray-600 mb-4">Create personalized learning videos from your textbooks using AI-powered video generation technology.</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">📚 PDF to Video</span>
+                          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🤖 AI Narration</span>
+                          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">🎨 Visual Slides</span>
+                          <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">📱 Offline Ready</span>
                         </div>
                       </div>
-                      <button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-2 rounded-lg font-medium hover:from-indigo-600 hover:to-purple-600 transition-all duration-200">
-                        {path.action}
-                      </button>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Adaptive Learning Features */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4">Adaptive Learning Features</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white rounded-xl p-6 shadow-lg border">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                      <h5 className="text-lg font-bold text-gray-900">Smart Difficulty Adjustment</h5>
-                    </div>
-                    <p className="text-gray-600 mb-4">Questions automatically adjust based on your performance to keep you challenged but not overwhelmed.</p>
-                    <div className="flex items-center text-sm text-blue-600">
-                      <span className="font-medium">Currently Active</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full ml-2"></div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-xl p-6 shadow-lg border">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mr-3">
-                        <Target className="w-5 h-5 text-white" />
-                      </div>
-                      <h5 className="text-lg font-bold text-gray-900">Personalized Goals</h5>
-                    </div>
-                    <p className="text-gray-600 mb-4">Set and track learning goals that match your pace and interests.</p>
-                    <button className="text-sm text-green-600 font-medium hover:text-green-700">
-                      Customize Goals →
-                    </button>
-                  </div>
-
-                  <div className="bg-white rounded-xl p-6 shadow-lg border">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
-                        <Clock className="w-5 h-5 text-white" />
-                      </div>
-                      <h5 className="text-lg font-bold text-gray-900">Optimal Study Times</h5>
-                    </div>
-                    <p className="text-gray-600 mb-4">Get recommendations for the best times to study based on your learning patterns.</p>
-                    <div className="text-sm text-purple-600">
-                      <span className="font-medium">Next session: 2:00 PM</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-xl p-6 shadow-lg border">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
-                        <Award className="w-5 h-5 text-white" />
-                      </div>
-                      <h5 className="text-lg font-bold text-gray-900">Achievement Tracking</h5>
-                    </div>
-                    <p className="text-gray-600 mb-4">Earn badges and rewards for consistent learning and improvement.</p>
-                    <div className="flex items-center text-sm text-orange-600">
-                      <span className="font-medium">5 achievements unlocked</span>
-                      <Award className="w-4 h-4 ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Video Learning Platform */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4">🎬 AI Video Learning Platform</h4>
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200">
-                  <div className="flex flex-col md:flex-row items-center justify-between">
-                    <div className="flex-1 mb-4 md:mb-0 md:mr-6">
-                      <h5 className="text-lg font-bold text-gray-900 mb-2">Generate Educational Videos</h5>
-                      <p className="text-gray-600 mb-4">Create personalized learning videos from your textbooks using AI-powered video generation technology.</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">📚 PDF to Video</span>
-                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🤖 AI Narration</span>
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">🎨 Visual Slides</span>
-                        <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">📱 Offline Ready</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                        <Play className="w-8 h-8 text-white" />
-                      </div>
-                      <button
-                        onClick={async () => {
-                          sound.playButtonClick();
-                          
-                          try {
-                            // Check if genrate server is running on port 3003
-                            const response = await fetch('http://localhost:3003/api/chapters/english', { 
-                              method: 'GET',
-                              timeout: 3000
-                            });
-                            
-                            if (response.ok) {
-                              // Server is running, open the app
-                              window.open('http://localhost:3003', '_blank');
-                              alert('🎬 Video Learning Platform opened!\n\nThe AI video generator is now running in a new tab.');
-                            } else {
-                              throw new Error('Server not responding');
-                            }
-                          } catch (error) {
-                            // Server is not running, show instructions
-                            const instructions = `🎬 Video Learning Platform Setup Required
+                      <div className="flex flex-col items-center space-y-3 w-full mt-auto">
+                        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                          <Play className="w-8 h-8 text-white" />
+                        </div>
+                        <button
+                          onClick={async () => {
+                            sound.playButtonClick();
+                            try {
+                              const controller = new AbortController();
+                              const timeoutId = setTimeout(() => controller.abort(), 3000);
+                              const response = await fetch('http://localhost:3003/api/chapters/english', { method: 'GET', signal: controller.signal });
+                              clearTimeout(timeoutId);
+                              if (response.ok) {
+                                window.open('http://localhost:3003', '_blank');
+                                alert('🎬 Video Learning Platform opened!\n\nThe AI video generator is now running in a new tab.');
+                              } else {
+                                throw new Error('Server not responding');
+                              }
+                            } catch (error) {
+                              const instructions = `🎬 Video Learning Platform Setup Required
 
 To use the AI video generator:
 
@@ -1333,130 +1237,72 @@ To use the AI video generator:
 
 The genrate app will run on http://localhost:3002
 Note: The API server runs on port 3003`;
-                            
-                            alert(instructions);
-                            
-                            // Still try to open the URL in case user wants to start it manually
-                            if (confirm('Would you like to open the URL anyway? (You can bookmark it for later)')) {
-                              window.open('http://localhost:3003', '_blank');
+                              alert(instructions);
+                              if (confirm('Would you like to open the URL anyway? (You can bookmark it for later)')) {
+                                window.open('http://localhost:3003', '_blank');
+                              }
                             }
-                          }
-                        }}
-                        onMouseEnter={() => sound.playHover()}
-                        className="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-xl font-semibold text-base hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl relative group"
-                      >
-                        <Play className="w-5 h-5" />
-                        Open Video Generator
-                        <span className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
-                        </span>
-                      </button>
-                      <p className="text-xs text-gray-500 text-center max-w-xs">
-                        Transforms your textbooks into engaging video lessons
-                      </p>
+                          }}
+                          onMouseEnter={() => sound.playHover()}
+                          className="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-xl font-semibold text-base hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl relative group"
+                        >
+                          <Play className="w-5 h-5" />
+                          Open Video Generator
+                          <span className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
+                          </span>
+                        </button>
+                        <p className="text-xs text-gray-500 text-center max-w-xs">
+                          Step 1: Open the generator • Step 2: Select PDF • Step 3: Generate
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* PDF Learning Resources Card */}
+                <div className="mb-0">
+                  <h4 className="text-xl font-bold text-gray-900 mb-4">📚 PDF Learning Resources</h4>
+                  <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200 h-full">
+                    <div className="flex flex-col items-start h-full">
+                      <div className="w-full mb-4">
+                        <h5 className="text-lg font-bold text-gray-900 mb-2">Browse & Generate Study Materials</h5>
+                        <p className="text-gray-600 mb-4">Upload PDFs from your textbooks and automatically generate interactive quizzes and flashcards using AI.</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">📄 PDF Upload</span>
+                          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🤖 AI Generation</span>
+                          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">📝 Auto Quizzes</span>
+                          <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">🗂️ Smart Cards</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center space-y-3 w-full mt-auto">
+                        <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                          <FileText className="w-8 h-8 text-white" />
+                        </div>
+                        <button
+                          onClick={() => {
+                            sound.playButtonClick();
+                            setShowPDFBrowser(true);
+                          }}
+                          onMouseEnter={() => sound.playHover()}
+                          className="flex items-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold text-base hover:from-orange-600 hover:to-red-600 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl relative group"
+                        >
+                          <FileText className="w-5 h-5" />
+                          Browse PDFs
+                          <span className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
+                          </span>
+                        </button>
+                        <p className="text-xs text-gray-500 text-center max-w-xs">
+                          Step 1: Browse PDFs • Step 2: Choose content • Step 3: Quiz or Cards
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* PDF Learning Resources */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4">📚 PDF Learning Resources</h4>
-                <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
-                  <div className="flex flex-col md:flex-row items-center justify-between">
-                    <div className="flex-1 mb-4 md:mb-0 md:mr-6">
-                      <h5 className="text-lg font-bold text-gray-900 mb-2">Browse & Generate Study Materials</h5>
-                      <p className="text-gray-600 mb-4">Upload PDFs from your textbooks and automatically generate interactive quizzes and flashcards using AI.</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">📄 PDF Upload</span>
-                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🤖 AI Generation</span>
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">📝 Auto Quizzes</span>
-                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">🗂️ Smart Cards</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                        <FileText className="w-8 h-8 text-white" />
-                      </div>
-                      <button
-                        onClick={() => {
-                          sound.playButtonClick();
-                          setShowPDFBrowser(true);
-                        }}
-                        onMouseEnter={() => sound.playHover()}
-                        className="flex items-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold text-base hover:from-orange-600 hover:to-red-600 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl relative group"
-                      >
-                        <FileText className="w-5 h-5" />
-                        Browse PDFs
-                        <span className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
-                        </span>
-                      </button>
-                      <p className="text-xs text-gray-500 text-center max-w-xs">
-                        Create personalized study materials from your books
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Learning Analytics */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4">Your Learning Analytics</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-blue-800">Study Sessions</p>
-                        <p className="text-2xl font-bold text-blue-900">24</p>
-                      </div>
-                      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                        <Clock className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-xs text-blue-600 mt-1">This week</p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl border border-green-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-green-800">Accuracy Rate</p>
-                        <p className="text-2xl font-bold text-green-900">87%</p>
-                      </div>
-                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                        <Target className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-xs text-green-600 mt-1">+5% this week</p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl border border-purple-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-purple-800">Topics Mastered</p>
-                        <p className="text-2xl font-bold text-purple-900">12</p>
-                      </div>
-                      <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-xs text-purple-600 mt-1">+2 this month</p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-xl border border-orange-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-orange-800">Learning Streak</p>
-                        <p className="text-2xl font-bold text-orange-900">7 days</p>
-                      </div>
-                      <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-xs text-orange-600 mt-1">Personal best!</p>
-                  </div>
-                </div>
-              </div>
+              
 
 
               {/* PDF Browser Modal */}
@@ -2173,6 +2019,60 @@ Note: The API server runs on port 3003`;
               <div className="bg-white rounded-2xl p-6 shadow-sm border">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Subject Progress Overview</h3>
                 <ProgressChart data={chartData} />
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={() => {
+                      try {
+                        sound.playButtonClick();
+                        // Browser-native print to PDF flow
+                        const printWin = window.open('', '_blank');
+                        if (!printWin) return;
+                        const summary = {
+                          generatedAt: new Date().toLocaleString(),
+                          name: user?.name,
+                          email: user?.email,
+                          level: user?.stats?.level,
+                          xp: user?.stats?.xp,
+                          subjects: Object.entries(user?.stats?.subjects || {}).map(([k, v]: any) => ({
+                            name: k,
+                            progress: Math.round(v.progress || 0),
+                            completed: `${v.completedLessons || 0}/${v.totalLessons || 0}`,
+                            avgScore: v.averageScore || 0
+                          })),
+                        };
+                        const html = `<!doctype html><html><head><meta charset="utf-8"><title>Progress Report</title>
+                          <style>body{font-family:Arial,Helvetica,sans-serif;padding:24px;color:#111}
+                          h1{margin:0 0 8px} h2{margin:24px 0 12px}
+                          table{border-collapse:collapse;width:100%}
+                          th,td{border:1px solid #ddd;padding:8px;font-size:12px}
+                          th{background:#f5f5f5;text-align:left}
+                          .meta{font-size:12px;color:#444;margin-bottom:12px}
+                          </style></head><body>
+                          <h1>Cogniflow Progress Report</h1>
+                          <div class="meta">Generated: ${summary.generatedAt}</div>
+                          <div class="meta">Student: ${summary.name || ''} (${summary.email || ''})</div>
+                          <div class="meta">Level: ${summary.level ?? ''} • XP: ${summary.xp ?? ''}</div>
+                          <h2>Subjects</h2>
+                          <table><thead><tr><th>Subject</th><th>Progress</th><th>Lessons</th><th>Avg Score</th></tr></thead>
+                          <tbody>
+                            ${summary.subjects.map(s => `<tr><td>${s.name}</td><td>${s.progress}%</td><td>${s.completed}</td><td>${s.avgScore}%</td></tr>`).join('')}
+                          </tbody></table>
+                          </body></html>`;
+                        printWin.document.write(html);
+                        printWin.document.close();
+                        printWin.focus();
+                        printWin.print();
+                      } catch (err) {
+                        console.error('PDF export failed', err);
+                        alert('Could not open PDF print dialog.');
+                      }
+                    }}
+                    onMouseEnter={() => sound.playHover()}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    Download Report (PDF)
+                  </button>
+                </div>
               </div>
               <div className="bg-white rounded-2xl p-6 shadow-sm border">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Weekly Activity</h3>
@@ -2187,50 +2087,54 @@ Note: The API server runs on port 3003`;
                 <div>
                   <h4 className="font-medium text-gray-900 mb-4">Subject Progress</h4>
                   <div className="space-y-4">
-                    {subjects.map((subject) => (
-                      <div key={subject.id}>
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg">{subject.icon}</span>
-                            <span className="font-medium text-gray-900">{subject.name}</span>
+                    {Object.entries(user?.stats?.subjects || {}).map(([name, s]: any, idx: number) => {
+                      const colors = ['bg-blue-500','bg-green-500','bg-purple-500','bg-yellow-500'];
+                      const color = colors[idx % colors.length];
+                      const progress = Math.round(s?.progress || 0);
+                      return (
+                        <div key={name}>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg">📘</span>
+                              <span className="font-medium text-gray-900">{name}</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{progress}%</span>
                           </div>
-                          <span className="text-sm text-gray-500">{subject.progress}%</span>
+                          <div className="w-full bg-gray-200 rounded-full h-3">
+                            <div 
+                              className={`h-3 rounded-full ${color}`}
+                              style={{ width: `${progress}%` }}
+                            ></div>
+                          </div>
+                          <div className="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>{s?.completedLessons || 0}/{s?.totalLessons || 0} lessons</span>
+                            <span>Avg: {s?.averageScore || 0}%</span>
+                          </div>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-3">
-                          <div 
-                            className={`h-3 rounded-full ${subject.color}`}
-                            style={{ width: `${subject.progress}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between text-xs text-gray-500 mt-1">
-                          <span>{subject.completedLessons}/{subject.totalLessons} lessons</span>
-                          <span>Avg: {subject.averageScore}%</span>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-900 mb-4">Recent Activities</h4>
                   <div className="space-y-3">
-                    {activities.slice(0, 5).map((activity) => (
+                    {(user?.stats?.recentActivities || []).slice(0, 5).map((activity: any) => (
                       <div key={activity.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <div className="flex items-center space-x-3">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                             activity.type === 'quiz' ? 'bg-green-100' : 
-                            activity.type === 'flashcard' ? 'bg-blue-100' : 'bg-purple-100'
+                            activity.type === 'flashcards' ? 'bg-blue-100' : activity.type === 'game' ? 'bg-purple-100' : 'bg-yellow-100'
                           }`}>
-                            {activity.type === 'quiz' ? '📝' : 
-                             activity.type === 'flashcard' ? '🗂️' : '📖'}
+                            {activity.type === 'quiz' ? '📝' : activity.type === 'flashcards' ? '🗂️' : activity.type === 'game' ? '🎮' : '⭐'}
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900">{activity.subject}</p>
-                            <p className="text-sm text-gray-500">{activity.topic}</p>
+                            <p className="font-medium text-gray-900">{activity.subject || activity.type}</p>
+                            <p className="text-sm text-gray-500">{activity.description}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          {activity.score && <p className="font-medium text-green-600">{activity.score}%</p>}
-                          <p className="text-xs text-gray-500">{formatTimeAgo(activity.time)}</p>
+                          {typeof activity.xpEarned === 'number' && <p className="font-medium text-green-600">+{activity.xpEarned} XP</p>}
+                          <p className="text-xs text-gray-500">{formatTimeAgo(activity.timestamp)}</p>
                         </div>
                       </div>
                     ))}
@@ -2263,12 +2167,7 @@ Note: The API server runs on port 3003`;
         />
       )}
 
-      {showProgressReport && (
-        <ProgressReport 
-          onClose={() => setShowProgressReport(false)} 
-          user={user} 
-        />
-      )}
+      
 
       {showStreakTracker && (
         <StreakTracker 
