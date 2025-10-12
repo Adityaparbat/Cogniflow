@@ -47,6 +47,7 @@ export default function GemmaChatbot({ isOpen, onClose }: ChatbotProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
+  const lastFinalIndexRef = useRef<number>(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,26 +72,35 @@ export default function GemmaChatbot({ isOpen, onClose }: ChatbotProps) {
     recognition.lang = 'en-US';
     recognition.continuous = true;
     recognition.interimResults = true;
+
     recognition.onresult = (event: any) => {
-      let transcript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
+      // Append only new final segments once; ignore previously processed ones
+      let committedText = '';
+      for (let i = lastFinalIndexRef.current; i < event.results.length; i++) {
+        const res = event.results[i];
+        const transcript = res[0]?.transcript || '';
+        if (res.isFinal) {
+          committedText += transcript + ' ';
+          lastFinalIndexRef.current = i + 1;
+        }
       }
-      setInputText(prev => {
-        const base = prev.trim().length > 0 ? prev + ' ' : '';
-        return base + transcript.trim();
-      });
+      if (committedText) {
+        setInputText(prev => (prev.trim().length ? prev + ' ' : '') + committedText.trim());
+      }
     };
+
     recognition.onend = () => {
       setIsListening(false);
     };
     recognition.onerror = () => {
       setIsListening(false);
     };
+
     recognitionRef.current = recognition;
     return () => {
       try { recognition.stop(); } catch {}
       recognitionRef.current = null;
+      lastFinalIndexRef.current = 0;
     };
   }, []);
 
@@ -100,6 +110,7 @@ export default function GemmaChatbot({ isOpen, onClose }: ChatbotProps) {
     if (isListening) {
       try { recognition.stop(); } catch {}
       setIsListening(false);
+      lastFinalIndexRef.current = 0;
     } else {
       try { recognition.start(); setIsListening(true); } catch {}
     }

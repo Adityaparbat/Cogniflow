@@ -38,6 +38,10 @@ export class SignLanguageRecognition {
 		this.videoElement = null;
 	}
 
+	public get isServerAvailable(): boolean {
+		return this.serverAvailable;
+	}
+
 	public setVideoElement(video: HTMLVideoElement | null) {
 		this.videoElement = video;
 	}
@@ -60,7 +64,7 @@ export class SignLanguageRecognition {
 			this.camera = stream;
 
 			if (this.videoElement) {
-				this.videoElement.srcObject = stream;
+				(this.videoElement as any).srcObject = stream;
 				this.videoElement.play().catch(() => {});
 			}
 
@@ -84,6 +88,7 @@ export class SignLanguageRecognition {
 			});
 			if (response.ok) {
 				this.serverAvailable = true;
+				// Attempt WS connection only if a raw ws endpoint exists; safe to ignore failure
 				this.initWebSocket();
 				return true;
 			}
@@ -103,14 +108,14 @@ export class SignLanguageRecognition {
 					const data = JSON.parse(event.data) as SignLanguageServerMessage;
 					this.handleServerData(data);
 				} catch (e) {
-					console.error('Error parsing server data:', e);
+					// server may be Socket.IO; ignore parse errors
 				}
 			};
 			this.socket.onclose = () => {
 				this.socket = null;
 			};
 		} catch (error) {
-			console.error('Failed to initialize WebSocket:', error);
+			// ignore
 		}
 	}
 

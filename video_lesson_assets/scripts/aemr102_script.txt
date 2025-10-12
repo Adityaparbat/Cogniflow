@@ -1,0 +1,113 @@
+
+---
+[Script for Chunk 1]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: Greetings Around the World
+Pet: "When I meet someone, I say 'Namaste'!"
+Pet: "In the morning, I say 'Good morning'!"
+Pet: "In the afternoon, I say 'Good afternoon'!"
+Pet: "In the evening, I say 'Good night'!"
+Scene 2: Actions We Do
+Pet: "I see my teacher!"
+Pet: "I eat my food!"
+Pet: "I hear the bell ring!"
+Pet: "I walk to school!"
+Pet: "I play football!"
+Scene 3: Letter Sounds
+Pet: "Let's say the letters and find the pictures that start with the same sound!"
+Pet: "f is for fox!"
+Pet: "g is for goat!"
+Pet: "h is for house!"
+Pet: "j is for jacket!"
+Pet: "h is for hand!"
+Pet: "i is for ice!"
+Pet: "j is for jackfruit!"
+Pet: "f is for fish!"
+Pet: "g is for girl!"
+Pet: "h is for hut!"
+Pet: "i is for inkypot!"
+Pet: "j is for jug!"
+Scene 4: Let's Move!
+Pet: "Hop a little, jump a little, one two three!"
+Pet: "Stamp a little, skip a little, tap one knee!"
+Pet: "Dance a little, twist a little, shake your hand!"
+Pet: "Yawn a little, sleep a little, in your bed!"
+Scene 5: Picture Talk
+Pet: "Look at this picture! How many children do you see?"
+Pet: "What games are they playing?"
+Pet: "What's your favorite game?"
+Pet: "What are the children who aren't playing doing?"
+Scene 6: Actions and Pictures
+Pet: "They are dancing!"
+Pet: "She is jumping!"
+Pet: "He is yawning!"
+Pet: "She is hopping!"
+Pet: "They are walking!"
+Pet: "Seema is running!"
+Pet: "Kumar is stretching!"
+Pet: "The dog is sleeping!"
+Pet: "Vittal is bending!"
+Pet: "The boy is skipping!"
+Scene 7: Let's Play Hopscotch!
+Pet: "We're going to play hopscotch! Jump with one foot in each box!"
+Pet: "Did you jump?"
+Pet: "Did you hop?"
+Pet: "Did you have fun?"
+Pet: "Did you count the numbers?"
+Scene 8: Let's Write!
+Pet: "Look at the picture and fill in the words!"
+Pet: "dance hop skip sleep bend jump eat!"
+
+---
+[Script for Chunk 2]
+Chunk 1: Introduction
+Pet: "Hello, superstar learners! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: The Song of Our Parts
+Pet: "Two little hands go clap, clap, clap!
+Two little legs go tap, tap, tap!
+Two little eyes are open wide,
+One little head goes side to side!"
+Pet: "Clap with me—clap, clap! Tap with me—tap, tap! Now wiggle your head side to side—tilt, tilt! Great job!"
+Scene 2: Eyes and Ears Exploration
+Pet: "Let's look at our amazing eyes and ears next!"
+Pet: "Two little eyes are open wide,
+Two little ears to hear inside!"
+Pet: "Can you look all around and listen for sounds? What do you see? What do you hear? Tell me!"
+Scene 3: All Together Now
+Pet: "Time for another song about you!
+One little head goes side to side,
+One little body that belongs to me!"
+Pet: "That's right—your body is yours, a special gift to play, learn, and grow!"
+
+---
+[Script for Chunk 3]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: The Song of Our Parts
+Pet: "Two little hands go clap, clap, clap!
+Two little legs go tap, tap, tap!
+Two little eyes are open wide,
+One little head goes side to side!"
+Pet: "Clap with me—clap, clap! Tap with me—tap, tap! Now wiggle your head side to side—tilt, tilt! Great job!"
+Scene 2: Eyes and Ears Exploration
+Pet: "Let's look at our amazing eyes and ears next!"
+Pet: "Two little eyes are open wide,
+Two little ears to hear inside!"
+Pet: "Can you look all around and listen for sounds? What do you see? What do you hear? Tell me!"
+Scene 3: All Together Now
+Pet: "Time for another song about you!
+One little head goes side to side,
+One little body that belongs to me!"
+Pet: "That's right—your body is yours, a special gift to play, learn, and grow!"
+
+---
+[Script for Chunk 4]
+Chunk 1: Let's Get Crafty!
+Pet: "Hello, amazing artists! I'm Pippin the Puppy, and today we're going to make some puppets! We'll use colourful strips of paper and draw faces of our family members. Then, we can play and have fun with them! Are you ready to create?"
+
+Scene 1: The Alphabet Song!
+Pet: "Let's sing the alphabet song! We'll sing the capital letters loudly and the small letters softly. Ready? A B C D E F G H I J K L M N O P Q R S T U V W X Y Z! Let's do it again! A B C D e f g H I J K l m n o p Q R S T u v w X Y Z! Wonderful job, everyone!"
+
+Scene 2: Puppet Time!
+Pet: "Now, let's stick those adorable family faces onto our paper strips! You can use colours you love. And now, the best part—it's puppet show time! Make your puppets talk and tell stories. Have fun!"

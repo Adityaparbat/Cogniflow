@@ -14,7 +14,8 @@ export default function SignupPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    standard: ''
+    standard: '',
+    role: 'student' as 'student' | 'teacher'
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -33,6 +34,13 @@ export default function SignupPage() {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
+    });
+  };
+
+  const handleRoleChange = (role: 'student' | 'teacher') => {
+    setFormData({
+      ...formData,
+      role
     });
   };
 
@@ -55,8 +63,8 @@ export default function SignupPage() {
       return;
     }
 
-    // Validate standard selection
-    if (!formData.standard) {
+    // Validate standard selection for students
+    if (formData.role === 'student' && !formData.standard) {
       setError('Please select your standard/grade');
       setIsLoading(false);
       return;
@@ -75,8 +83,9 @@ export default function SignupPage() {
       name: formData.name,
       email: formData.email,
       password: formData.password,
-      standard: formData.standard,
-      grade: formData.standard,
+      role: formData.role,
+      standard: formData.role === 'student' ? formData.standard : undefined,
+      grade: formData.role === 'student' ? formData.standard : undefined,
       profile: {
         preferences: {
           theme: 'light',
@@ -91,6 +100,7 @@ export default function SignupPage() {
       id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      role: newUser.role,
       standard: newUser.standard,
       grade: newUser.grade,
       isLoggedIn: true,
@@ -100,9 +110,13 @@ export default function SignupPage() {
     setSuccess(true);
     setIsLoading(false);
     
-    // Redirect to dashboard after success
+    // Redirect to appropriate dashboard after success
     setTimeout(() => {
-      router.push('/dashboard');
+      if (newUser.role === 'teacher') {
+        router.push('/teacher-dashboard');
+      } else {
+        router.push('/dashboard');
+      }
     }, 2000);
   };
 
@@ -166,6 +180,39 @@ export default function SignupPage() {
 
           {/* Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Role Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">
+                I am a
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleRoleChange('student')}
+                  className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
+                    formData.role === 'student'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  <User className="h-5 w-5" />
+                  <span className="font-medium">Student</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRoleChange('teacher')}
+                  className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
+                    formData.role === 'teacher'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  <GraduationCap className="h-5 w-5" />
+                  <span className="font-medium">Teacher</span>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
                 Full Name
@@ -208,31 +255,33 @@ export default function SignupPage() {
               </div>
             </div>
 
-            <div>
-              <label htmlFor="standard" className="block text-sm font-medium text-gray-900 mb-2">
-                Standard/Grade
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <GraduationCap className="h-5 w-5 text-gray-600" />
+            {formData.role === 'student' && (
+              <div>
+                <label htmlFor="standard" className="block text-sm font-medium text-gray-900 mb-2">
+                  Standard/Grade
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <GraduationCap className="h-5 w-5 text-gray-600" />
+                  </div>
+                  <select
+                    id="standard"
+                    name="standard"
+                    value={formData.standard}
+                    onChange={handleChange}
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                    required={formData.role === 'student'}
+                  >
+                    <option value="">Select your standard</option>
+                    {standards.map((standard) => (
+                      <option key={standard} value={standard}>
+                        {standard}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <select
-                  id="standard"
-                  name="standard"
-                  value={formData.standard}
-                  onChange={handleChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
-                  required
-                >
-                  <option value="">Select your standard</option>
-                  {standards.map((standard) => (
-                    <option key={standard} value={standard}>
-                      {standard}
-                    </option>
-                  ))}
-                </select>
               </div>
-            </div>
+            )}
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-2">

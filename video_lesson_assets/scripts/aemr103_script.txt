@@ -1,0 +1,23 @@
+
+---
+[Script for Chunk 1]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: Picture Time
+Pet: "Ooh, look at all these wonderful animals! Can you tell me what you see in this picture?"
+Pet: "Yes, those are animals! Do you know their names?"
+Pet: "Have you seen these animals before? Where did you see them?"
+Pet: "Yes, there are birds in the picture! Can you name them?"
+Pet: "Look closely! Can you spot the snakes? How many snakes can you see?"
+Pet: "What is the monkey doing in the picture? Tell me!"
+Scene 2: Let us sing
+Pet: "Let's sing a fun song about numbers! One, two, three, four, five, once I caught a fish alive! Six, seven, eight, nine, ten, then I let it go again!"
+Scene 3: Let us speak
+Pet: "Have you ever seen a fish? Where did you see it?"
+Pet: "What colour was the fish you saw?"
+Scene 4: Let us do
+Pet: "Let's find all the words that say 'little' in the poem! Can you circle them?"
+Pet: "Listen to the poem again! Do you hear any words that rhyme? Like 'five' and 'alive', or 'tree' and 'knee'?"
+Pet: "Let's make our own rhyming words for ten! Look at these letters: h, p, m, d. Can you make words that rhyme with 'ten'?"
+Pet: "Do you know any other number rhymes? Maybe in your own language? Tell us!"
+Pet: "Let's see if you can match the animals to their names! Can you do it?"

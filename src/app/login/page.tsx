@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, GraduationCap } from 'lucide-react';
 import { authenticateUser, userDataset } from '@/lib/userData';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState<'student' | 'teacher'>('student');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,17 +26,31 @@ export default function LoginPage() {
     const authenticatedUser = authenticateUser(email, password);
     
     if (authenticatedUser) {
+      // Check if the user's role matches the selected role
+      if (authenticatedUser.role !== role) {
+        setError(`Please select ${authenticatedUser.role} role to login.`);
+        setIsLoading(false);
+        return;
+      }
+      
       // Store user session
       localStorage.setItem('user', JSON.stringify({
         id: authenticatedUser.id,
         name: authenticatedUser.name,
         email: authenticatedUser.email,
+        role: authenticatedUser.role,
         standard: authenticatedUser.standard,
         grade: authenticatedUser.grade,
         isLoggedIn: true,
         stats: authenticatedUser.stats
       }));
-      router.push('/dashboard');
+      
+      // Redirect based on role
+      if (authenticatedUser.role === 'teacher') {
+        router.push('/teacher-dashboard');
+      } else {
+        router.push('/dashboard');
+      }
     } else {
       setError('Invalid email or password. Try any of the sample users below.');
     }
@@ -88,6 +103,39 @@ export default function LoginPage() {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Role Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">
+                I am a
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setRole('student')}
+                  className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
+                    role === 'student'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  <User className="h-5 w-5" />
+                  <span className="font-medium">Student</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRole('teacher')}
+                  className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
+                    role === 'teacher'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  <GraduationCap className="h-5 w-5" />
+                  <span className="font-medium">Teacher</span>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                 Email Address
@@ -174,13 +222,24 @@ export default function LoginPage() {
           {/* Sample Users */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-800 font-medium mb-2">Sample Users:</p>
-            {userDataset.slice(0, 3).map((user) => (
-              <div key={user.id} className="mb-2 p-2 bg-white rounded border">
-                <p className="text-xs text-blue-700 font-medium">{user.name} ({user.standard})</p>
-                <p className="text-xs text-blue-600">Email: {user.email}</p>
-                <p className="text-xs text-blue-600">Password: password123</p>
-              </div>
-            ))}
+            <div className="space-y-2">
+              <p className="text-xs text-blue-600 font-medium">Students:</p>
+              {userDataset.filter(user => user.role === 'student').slice(0, 2).map((user) => (
+                <div key={user.id} className="mb-2 p-2 bg-white rounded border">
+                  <p className="text-xs text-blue-700 font-medium">{user.name} ({user.standard})</p>
+                  <p className="text-xs text-blue-600">Email: {user.email}</p>
+                  <p className="text-xs text-blue-600">Password: password123</p>
+                </div>
+              ))}
+              <p className="text-xs text-blue-600 font-medium mt-3">Teachers:</p>
+              {userDataset.filter(user => user.role === 'teacher').map((user) => (
+                <div key={user.id} className="mb-2 p-2 bg-white rounded border">
+                  <p className="text-xs text-blue-700 font-medium">{user.name} (Teacher)</p>
+                  <p className="text-xs text-blue-600">Email: {user.email}</p>
+                  <p className="text-xs text-blue-600">Password: password123</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Sign Up Link */}

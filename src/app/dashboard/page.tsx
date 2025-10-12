@@ -1215,32 +1215,17 @@ CogniFlow is an AI-powered learning platform designed to make education engaging
                             try {
                               const controller = new AbortController();
                               const timeoutId = setTimeout(() => controller.abort(), 3000);
-                              const response = await fetch('http://localhost:3003/api/chapters/english', { method: 'GET', signal: controller.signal });
+                              const response = await fetch('/api/video_lesson?action=chapters&subject=english', { method: 'GET', signal: controller.signal });
                               clearTimeout(timeoutId);
                               if (response.ok) {
-                                window.open('http://localhost:3003', '_blank');
-                                alert('🎬 Video Learning Platform opened!\n\nThe AI video generator is now running in a new tab.');
+                                // Redirect to the video lesson page
+                                window.location.href = '/video-lessons';
                               } else {
-                                throw new Error('Server not responding');
+                                throw new Error('Video lesson API not responding');
                               }
                             } catch (error) {
-                              const instructions = `🎬 Video Learning Platform Setup Required
-
-To use the AI video generator:
-
-1. Open a terminal in the genrate folder
-2. Run the following command:
-   npm start
-
-3. Wait for the webpack dev server to start on port 3002
-4. Click this button again to open the platform
-
-The genrate app will run on http://localhost:3002
-Note: The API server runs on port 3003`;
-                              alert(instructions);
-                              if (confirm('Would you like to open the URL anyway? (You can bookmark it for later)')) {
-                                window.open('http://localhost:3003', '_blank');
-                              }
+                              // If API is not responding, still try to redirect to video lessons
+                              window.location.href = '/video-lessons';
                             }
                           }}
                           onMouseEnter={() => sound.playHover()}

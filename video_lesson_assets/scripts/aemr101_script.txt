@@ -1,0 +1,63 @@
+
+---
+[Script for Chunk 2]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: The Song of Our Parts
+Pet: "Two little hands go clap, clap, clap! 
+Two little legs go tap, tap, tap! 
+Two little eyes are open wide, 
+One little head goes side to side!" 
+Pet: "Clap with me—clap, clap! Tap with me—tap, tap! Now wiggle your head side to side—tilt, tilt! Great job!"
+Scene 2: Eyes and Ears Exploration
+Pet: "Let's look at our amazing eyes and ears next!" 
+Pet: "Two little eyes are open wide, 
+Two little ears to hear inside!" 
+Pet: "Can you look all around and listen for sounds? What do you see? What do you hear? Tell me!"
+Scene 3: All Together Now
+Pet: "Time for another song about you! 
+One little head goes side to side, 
+One little body that belongs to me!" 
+Pet: "That's right—your body is yours, a special gift to play, learn, and grow!"
+
+---
+[Script for Chunk 1]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: The Song of Our Parts
+Pet: "Two little hands go clap, clap, clap!
+Two little legs go tap, tap, tap!
+Two little eyes are open wide,
+One little head goes side to side!"
+Pet: "Clap with me—clap, clap! Tap with me—tap, tap! Now wiggle your head side to side—tilt, tilt! Great job!"
+Scene 2: Eyes and Ears Exploration
+Pet: "Let's look at our amazing eyes and ears next!"
+Pet: "Two little eyes are open wide,
+Two little ears to hear inside!"
+Pet: "Can you look all around and listen for sounds? What do you see? What do you hear? Tell me!"
+Scene 3: All Together Now
+Pet: "Time for another song about you!
+One little head goes side to side,
+One little body that belongs to me!"
+Pet: "That's right—your body is yours, a special gift to play, learn, and grow!"
+
+---
+[Script for Chunk 2]
+Chunk 1: Introduction
+Pet: "Hello, superstar learneers! I'm Pippin the Puppy, and today we're going on an amazing adventure—right inside your wonderful body! We'll sing, clap, wiggle, and explore all the parts that make you, you! Are you ready? Let's go!"
+Scene 1: The Song of Our Parts
+Pet: "Two little hands go clap, clap, clap! 
+Two little legs go tap, tap, tap! 
+Two little eyes are open wide, 
+One little head goes side to side!" 
+Pet: "Clap with me—clap, clap! Tap with me—tap, tap! Now wiggle your head side to side—tilt, tilt! Great job!"
+Scene 2: Eyes and Ears Exploration
+Pet: "Let's look at our amazing eyes and ears next!" 
+Pet: "Two little eyes are open wide, 
+Two little ears to hear inside!" 
+Pet: "Can you look all around and listen for sounds? What do you see? What do you hear? Tell me!"
+Scene 3: All Together Now
+Pet: "Time for another song about you! 
+One little head goes side to side, 
+One little body that belongs to me!" 
+Pet: "That's right—your body is yours, a special gift to play, learn, and grow!"

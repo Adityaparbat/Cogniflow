@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -8,17 +9,30 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CogniFlow - Gamified Learning Platform",
-  description: "Transform learning into a fun, interactive experience with CogniFlow - the offline educational platform for students.",
+  title: "Cogniflow - AI Video Learning Platform",
+  description: "Transform your textbooks into engaging educational videos with AI-powered content generation. Progressive Web App for offline learning.",
   manifest: "/manifest.json",
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/icons/icon-192x192.png',
+    apple: '/icons/icon-192x192.png',
+    shortcut: '/icons/icon-192x192.png',
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "CogniFlow",
+    title: "Cogniflow",
+    startupImage: '/icons/icon-512x512.png',
+  },
+  openGraph: {
+    title: "Cogniflow - AI Video Learning Platform",
+    description: "Transform your textbooks into engaging educational videos with AI-powered content generation.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cogniflow - AI Video Learning Platform",
+    description: "Transform your textbooks into engaging educational videos with AI-powered content generation.",
   },
 };
 
@@ -27,7 +41,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#3B82F6",
+  themeColor: "#8B5CF6",
 };
 
 export default function RootLayout({
@@ -47,6 +61,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         {children}
+        <PWAInstallPrompt />
       </body>
     </html>
   );

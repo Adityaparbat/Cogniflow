@@ -1,5 +1,5 @@
 // Auto-generated content from PDF: English - 2
-// Generated on: 2025-08-06 11:02:15
+// Generated on: 2025-09-27 17:17:27
 
 import { QuizQuestion, Flashcard } from '../quizData';
 
@@ -7,7 +7,7 @@ import { QuizQuestion, Flashcard } from '../quizData';
 export const generatedQuizzes: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the main topic discussed in: 'Comprehensive Summary and Educational Analysis of \"Gone with the Scooter\" This short story, \"Gone w'?",
+    question: "What is the main topic discussed in: 'Comprehensive Summary and Educational Analysis of \"Gone with the Scooter\" (Excerpt) This excerpt fr'?",
     options: ["Traditional craftsmanship", "Modern technology", "Economic development", "Social issues"],
     answer: 0,
     hint: "Think about the traditional aspects mentioned",
@@ -17,7 +17,7 @@ export const generatedQuizzes: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: "What is the main topic discussed in: 'It offers valuable educational content for young learners, emphasizing the process of investigation '?",
+    question: "What is the main topic discussed in: 'It's a great starting point for exploring themes of observation, problem-solving, and empathy'?",
     options: ["Traditional craftsmanship", "Modern technology", "Economic development", "Social issues"],
     answer: 0,
     hint: "Think about the traditional aspects mentioned",
@@ -37,7 +37,7 @@ export const generatedQuizzes: QuizQuestion[] = [
   },
   {
     id: 4,
-    question: "What is the main topic discussed in: 'Main Topics and Concepts: Honesty and Integrity: The central theme revolves around Gopi's initial '?",
+    question: "What is the main topic discussed in: 'This highlights the importance of honesty and doing the right thing'?",
     options: ["Traditional craftsmanship", "Modern technology", "Economic development", "Social issues"],
     answer: 0,
     hint: "Think about the traditional aspects mentioned",
@@ -51,24 +51,24 @@ export const generatedQuizzes: QuizQuestion[] = [
 export const generatedFlashcards: Flashcard[] = [
   {
     id: 1,
-    front: "What is Comprehensive Summary and Educational Analysis of \"Gone with the Scooter\" This short story,?",
-    back: "\"Gone with the Scooter,\" is a simple narrative focusing on curiosity, observation, and problem-solving",
+    front: "What is Comprehensive Summary and Educational Analysis of \"Gone with the Scooter\" (Excerpt) This excerpt from \"Gone?",
+    back: "with the Scooter\" tells a simple story about a young boy named Gopi and his curiosity",
     subject: "English",
     category: "2",
     difficulty: "easy"
   },
   {
     id: 2,
-    front: "What is It offers valuable educational content for young learners, emphasizing the?",
-    back: "process of investigation and the importance of paying attention to details",
+    front: "What is It's a great starting point for?",
+    back: "exploring themes of observation, problem-solving, and empathy",
     subject: "English",
     category: "2",
     difficulty: "easy"
   },
   {
     id: 3,
-    front: "What is Main Topics and Concepts: Curiosity: The story highlights Gopi's natural?",
-    back: "curiosity when he hears a noise and is prompted to investigate",
+    front: "What is Here's a detailed analysis?",
+    back: "focusing on educational content: 1",
     subject: "English",
     category: "2",
     difficulty: "easy"
@@ -83,16 +83,16 @@ export const generatedFlashcards: Flashcard[] = [
   },
   {
     id: 5,
-    front: "What is Main Topics and Concepts: Honesty and Integrity: The central theme revolves around Gopi's initial?",
-    back: "internal struggle with keeping the found ball and his eventual decision to seek its owner",
+    front: "What is This highlights the importance of?",
+    back: "honesty and doing the right thing",
     subject: "English",
     category: "2",
     difficulty: "easy"
   },
   {
     id: 6,
-    front: "What is This highlights the importance of?",
-    back: "honesty and doing the right thing",
+    front: "What is Logical Reasoning and Deduction: The story demonstrates how to?",
+    back: "use clues and information to arrive at a logical conclusion",
     subject: "English",
     category: "2",
     difficulty: "easy"

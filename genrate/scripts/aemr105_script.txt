@@ -1,0 +1,105 @@
+Scene: Introduction
+Pet: "Hello, young learners! Welcome to our exciting educational journey today! 
+        We're going to explore some wonderful concepts together. 
+        Get ready to learn, discover, and have fun as we dive into this amazing lesson!"
+
+Scene: Learning Point 1
+Pet: "Let's learn about: Use the sounds of animals from your language
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Use the sounds of animals from your language - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 2
+Pet: "Let's learn about: For example: cat – miaon-miaon
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                For example: cat – miaon-miaon - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 3
+Pet: "Let's learn about: Reprint 2025-26 Chapter 2
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Reprint 2025-26 Chapter 2 - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 4
+Pet: "Let's learn about: indd 75 2/26/2024 10:21:27 AM Let us do Colour the farm and name the animals in the farm
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                indd 75 2/26/2024 10:21:27 AM Let us do Colour the farm and name the animals in the farm - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 5
+Pet: "Let's learn about: Help box Cat | Cow | Goat | Pig | Hen | Cock | Sparrow 76 Mridang Reprint 2025-26 CChhaapptteerr 22
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                Help box Cat | Cow | Goat | Pig | Hen | Cock | Sparrow 76 Mridang Reprint 2025-26 CChhaapptteerr 22 - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Learning Point 6
+Pet: "Let's learn about: iinndddd 7766 1188--0055--22002233 1122::5511::4466 Let us read Animals and Birds My name is Jaggu
+                
+                This is a fascinating concept that helps us understand our world better. 
+                Let me explain this in detail so you can really grasp the idea.
+                
+                iinndddd 7766 1188--0055--22002233 1122::5511::4466 Let us read Animals and Birds My name is Jaggu - this is something very important for us to learn.
+                Think about it this way: when we understand this concept, we can apply it in many different situations.
+                
+                Let's break it down step by step. First, we need to understand the basic idea.
+                Then, we can explore how it works in practice.
+                Finally, we'll see how it connects to other things we know."
+
+Scene: Interactive Practice
+Pet: "Now let's practice what we've learned! 
+        
+        This is where the fun really begins. Let's work together to understand these concepts better.
+        
+        Can you think of examples from your own life? 
+        How do you see these ideas in the world around you?
+        
+        Take a moment to reflect on what we've learned so far.
+        What questions do you have? What would you like to explore further?"
+
+Scene: Summary and Conclusion
+Pet: "Excellent work today! Let's review what we've learned.
+        
+        We've covered some really important concepts together.
+        Remember, learning is a journey, and every step forward is progress.
+        
+        Keep exploring, keep asking questions, and keep growing!
+        You're doing amazing work, and I'm so proud of your effort today.
+        
+        Thank you for learning with me! See you next time for more exciting discoveries!"
+

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { signLanguageRecognition } from "../lib/signLanguage";
-import { Camera, StopCircle, Hand } from "lucide-react";
+import { Camera, StopCircle, Hand, Globe } from "lucide-react";
 
 interface SignLanguagePanelProps {
 	onClose?: () => void;
@@ -15,6 +15,7 @@ export default function SignLanguagePanel({ onClose, onGestureText, className }:
 	const [isActive, setIsActive] = useState(false);
 	const [buffer, setBuffer] = useState("");
 	const [initializing, setInitializing] = useState(false);
+	const [useServerView, setUseServerView] = useState(false);
 
 	useEffect(() => {
 		const cb = (_gesture: string, gBuffer: string) => {
@@ -37,6 +38,7 @@ export default function SignLanguagePanel({ onClose, onGestureText, className }:
 		if (ok) {
 			signLanguageRecognition.startRecognition();
 			setIsActive(true);
+			setUseServerView(signLanguageRecognition.isServerAvailable);
 		}
 		setInitializing(false);
 	};
@@ -63,6 +65,11 @@ export default function SignLanguagePanel({ onClose, onGestureText, className }:
 					<div className="text-sm font-semibold text-gray-900">Sign Language</div>
 				</div>
 				<div className="flex items-center gap-2">
+					{signLanguageRecognition.isServerAvailable && (
+						<button onClick={() => setUseServerView(v => !v)} title="Toggle server view" className={`px-2 py-1.5 rounded-lg text-xs border ${useServerView ? 'bg-blue-50 border-blue-400 text-blue-700' : 'bg-gray-50 border-gray-300 text-gray-700'}`}>
+							<Globe className="w-4 h-4" />
+						</button>
+					)}
 					<button onClick={isActive ? stop : start} className={`px-3 py-1.5 rounded-lg text-white text-sm shadow ${isActive ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`}>
 						{isActive ? (
 							<span className="inline-flex items-center gap-1"><StopCircle className="w-4 h-4" /> Stop</span>
@@ -76,7 +83,12 @@ export default function SignLanguagePanel({ onClose, onGestureText, className }:
 				</div>
 			</div>
 			<div className="relative rounded-xl overflow-hidden border border-gray-200 bg-black aspect-video w-full h-[260px]">
-				<video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover" />
+				{useServerView && signLanguageRecognition.isServerAvailable ? (
+					/* Show MJPEG stream from server with drawn landmarks */
+					<img src="http://localhost:5001/video_feed" alt="Sign server stream" className="w-full h-full object-cover" />
+				) : (
+					<video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover" />
+				)}
 				{initializing && (
 					<div className="absolute inset-0 bg-black/50 text-white text-sm flex items-center justify-center">Initializing camera…</div>
 				)}

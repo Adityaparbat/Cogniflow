@@ -3,8 +3,9 @@ export interface UserData {
   name: string;
   email: string;
   password: string; // In a real app, this would be hashed
-  standard: string;
-  grade: string;
+  role: 'student' | 'teacher';
+  standard?: string; // Optional for teachers
+  grade?: string; // Optional for teachers
   joinDate: Date;
   lastActive: Date;
   isLoggedIn: boolean;
@@ -212,6 +213,7 @@ export const userDataset: UserData[] = [
     name: 'Aarav Patel',
     email: 'aarav@student.com',
     password: 'password123',
+    role: 'student',
     standard: 'Class 8',
     grade: 'Class 8',
     joinDate: new Date('2024-01-15'),
@@ -242,10 +244,10 @@ export const userDataset: UserData[] = [
         targetDaily: 5
       },
       subjects: {
-        'Mathematics': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 88, lastStudied: new Date() },
-        'Science': { progress: 60, completedLessons: 12, totalLessons: 20, averageScore: 82, lastStudied: new Date() },
-        'English': { progress: 45, completedLessons: 9, totalLessons: 20, averageScore: 78, lastStudied: new Date() },
-        'Social Studies': { progress: 30, completedLessons: 6, totalLessons: 20, averageScore: 75, lastStudied: new Date() }
+        'Mathematics': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 88, lastStudied: new Date(), weeklyProgress: 15, monthlyProgress: 60, totalXP: 750, timeSpent: 120 },
+        'Science': { progress: 60, completedLessons: 12, totalLessons: 20, averageScore: 82, lastStudied: new Date(), weeklyProgress: 12, monthlyProgress: 48, totalXP: 600, timeSpent: 90 },
+        'English': { progress: 45, completedLessons: 9, totalLessons: 20, averageScore: 78, lastStudied: new Date(), weeklyProgress: 9, monthlyProgress: 36, totalXP: 450, timeSpent: 60 },
+        'Social Studies': { progress: 30, completedLessons: 6, totalLessons: 20, averageScore: 75, lastStudied: new Date(), weeklyProgress: 6, monthlyProgress: 24, totalXP: 300, timeSpent: 45 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
@@ -293,13 +295,14 @@ export const userDataset: UserData[] = [
     achievements: ['Math Master', 'Streak Champion', 'Science Explorer'],
     gameHistory: {
       quiz: [
-        { id: '1', score: 85, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', score: 90, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19') }
+        { id: '1', score: 85, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 15, xpEarned: 170, coinsEarned: 8 },
+        { id: '2', score: 90, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 12, xpEarned: 180, coinsEarned: 9 }
       ],
       flashcards: [
-        { id: '1', cardsStudied: 20, knownCards: 18, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', cardsStudied: 15, knownCards: 12, subject: 'Science', date: new Date('2024-01-19') }
-      ]
+        { id: '1', cardsStudied: 20, knownCards: 18, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 20, xpEarned: 100, coinsEarned: 3 },
+        { id: '2', cardsStudied: 15, knownCards: 12, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 15, xpEarned: 75, coinsEarned: 2 }
+      ],
+      games: []
     }
   },
   {
@@ -307,6 +310,7 @@ export const userDataset: UserData[] = [
     name: 'Zara Khan',
     email: 'zara@student.com',
     password: 'password123',
+    role: 'student',
     standard: 'Class 6',
     grade: 'Class 6',
     joinDate: new Date('2024-02-01'),
@@ -342,10 +346,10 @@ export const userDataset: UserData[] = [
         targetDaily: 4
       },
       subjects: {
-        'Mathematics': { progress: 50, completedLessons: 10, totalLessons: 20, averageScore: 75, lastStudied: new Date() },
-        'Science': { progress: 65, completedLessons: 13, totalLessons: 20, averageScore: 80, lastStudied: new Date() },
-        'English': { progress: 70, completedLessons: 14, totalLessons: 20, averageScore: 85, lastStudied: new Date() },
-        'Social Studies': { progress: 40, completedLessons: 8, totalLessons: 20, averageScore: 72, lastStudied: new Date() }
+        'Mathematics': { progress: 50, completedLessons: 10, totalLessons: 20, averageScore: 75, lastStudied: new Date(), weeklyProgress: 10, monthlyProgress: 40, totalXP: 500, timeSpent: 80 },
+        'Science': { progress: 65, completedLessons: 13, totalLessons: 20, averageScore: 80, lastStudied: new Date(), weeklyProgress: 13, monthlyProgress: 52, totalXP: 650, timeSpent: 95 },
+        'English': { progress: 70, completedLessons: 14, totalLessons: 20, averageScore: 85, lastStudied: new Date(), weeklyProgress: 14, monthlyProgress: 56, totalXP: 700, timeSpent: 105 },
+        'Social Studies': { progress: 40, completedLessons: 8, totalLessons: 20, averageScore: 72, lastStudied: new Date(), weeklyProgress: 8, monthlyProgress: 32, totalXP: 400, timeSpent: 60 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
@@ -376,12 +380,6 @@ export const userDataset: UserData[] = [
         },
         history: []
       },
-      coins: {
-        current: 320,
-        totalEarned: 320,
-        totalSpent: 0,
-        history: []
-      },
       timeTracking: {
         totalStudyTime: 80,
         dailyAverage: 40,
@@ -393,13 +391,14 @@ export const userDataset: UserData[] = [
     achievements: ['Bookworm', 'English Guru'],
     gameHistory: {
       quiz: [
-        { id: '1', score: 78, totalQuestions: 10, subject: 'English', date: new Date('2024-01-20') },
-        { id: '2', score: 82, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19') }
+        { id: '1', score: 78, totalQuestions: 10, subject: 'English', date: new Date('2024-01-20'), timeSpent: 12, xpEarned: 156, coinsEarned: 7 },
+        { id: '2', score: 82, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 14, xpEarned: 164, coinsEarned: 8 }
       ],
       flashcards: [
-        { id: '1', cardsStudied: 15, knownCards: 13, subject: 'English', date: new Date('2024-01-20') },
-        { id: '2', cardsStudied: 12, knownCards: 10, subject: 'Science', date: new Date('2024-01-19') }
-      ]
+        { id: '1', cardsStudied: 15, knownCards: 13, subject: 'English', date: new Date('2024-01-20'), timeSpent: 15, xpEarned: 75, coinsEarned: 2 },
+        { id: '2', cardsStudied: 12, knownCards: 10, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 12, xpEarned: 60, coinsEarned: 2 }
+      ],
+      games: []
     }
   },
   {
@@ -407,6 +406,7 @@ export const userDataset: UserData[] = [
     name: 'Riya Sharma',
     email: 'riya@student.com',
     password: 'password123',
+    role: 'student',
     standard: 'Class 10',
     grade: 'Class 10',
     joinDate: new Date('2023-12-10'),
@@ -437,10 +437,10 @@ export const userDataset: UserData[] = [
         targetDaily: 6
       },
       subjects: {
-        'Mathematics': { progress: 90, completedLessons: 18, totalLessons: 20, averageScore: 95, lastStudied: new Date() },
-        'Science': { progress: 85, completedLessons: 17, totalLessons: 20, averageScore: 90, lastStudied: new Date() },
-        'English': { progress: 80, completedLessons: 16, totalLessons: 20, averageScore: 88, lastStudied: new Date() },
-        'Social Studies': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 85, lastStudied: new Date() }
+        'Mathematics': { progress: 90, completedLessons: 18, totalLessons: 20, averageScore: 95, lastStudied: new Date(), weeklyProgress: 18, monthlyProgress: 72, totalXP: 900, timeSpent: 150 },
+        'Science': { progress: 85, completedLessons: 17, totalLessons: 20, averageScore: 90, lastStudied: new Date(), weeklyProgress: 17, monthlyProgress: 68, totalXP: 850, timeSpent: 135 },
+        'English': { progress: 80, completedLessons: 16, totalLessons: 20, averageScore: 88, lastStudied: new Date(), weeklyProgress: 16, monthlyProgress: 64, totalXP: 800, timeSpent: 120 },
+        'Social Studies': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 85, lastStudied: new Date(), weeklyProgress: 15, monthlyProgress: 60, totalXP: 750, timeSpent: 110 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
@@ -488,13 +488,14 @@ export const userDataset: UserData[] = [
     achievements: ['Math Master', 'Science Explorer', 'Streak Champion', 'Speed Learner', 'Grammar Guru'],
     gameHistory: {
       quiz: [
-        { id: '1', score: 95, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', score: 90, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19') }
+        { id: '1', score: 95, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 18, xpEarned: 190, coinsEarned: 9 },
+        { id: '2', score: 90, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 16, xpEarned: 180, coinsEarned: 9 }
       ],
       flashcards: [
-        { id: '1', cardsStudied: 25, knownCards: 24, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', cardsStudied: 20, knownCards: 19, subject: 'Science', date: new Date('2024-01-19') }
-      ]
+        { id: '1', cardsStudied: 25, knownCards: 24, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 25, xpEarned: 125, coinsEarned: 4 },
+        { id: '2', cardsStudied: 20, knownCards: 19, subject: 'Science', date: new Date('2024-01-19'), timeSpent: 20, xpEarned: 100, coinsEarned: 3 }
+      ],
+      games: []
     }
   },
   {
@@ -502,6 +503,7 @@ export const userDataset: UserData[] = [
     name: 'Arjun Singh',
     email: 'arjun@student.com',
     password: 'password123',
+    role: 'student',
     standard: 'Class 4',
     grade: 'Class 4',
     joinDate: new Date('2024-01-05'),
@@ -532,10 +534,10 @@ export const userDataset: UserData[] = [
         targetDaily: 3
       },
       subjects: {
-        'Mathematics': { progress: 40, completedLessons: 8, totalLessons: 20, averageScore: 72, lastStudied: new Date() },
-        'Science': { progress: 35, completedLessons: 7, totalLessons: 20, averageScore: 68, lastStudied: new Date() },
-        'English': { progress: 50, completedLessons: 10, totalLessons: 20, averageScore: 75, lastStudied: new Date() },
-        'Social Studies': { progress: 25, completedLessons: 5, totalLessons: 20, averageScore: 65, lastStudied: new Date() }
+        'Mathematics': { progress: 40, completedLessons: 8, totalLessons: 20, averageScore: 72, lastStudied: new Date(), weeklyProgress: 8, monthlyProgress: 32, totalXP: 400, timeSpent: 60 },
+        'Science': { progress: 35, completedLessons: 7, totalLessons: 20, averageScore: 68, lastStudied: new Date(), weeklyProgress: 7, monthlyProgress: 28, totalXP: 350, timeSpent: 50 },
+        'English': { progress: 50, completedLessons: 10, totalLessons: 20, averageScore: 75, lastStudied: new Date(), weeklyProgress: 10, monthlyProgress: 40, totalXP: 500, timeSpent: 75 },
+        'Social Studies': { progress: 25, completedLessons: 5, totalLessons: 20, averageScore: 65, lastStudied: new Date(), weeklyProgress: 5, monthlyProgress: 20, totalXP: 250, timeSpent: 35 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
@@ -583,13 +585,14 @@ export const userDataset: UserData[] = [
     achievements: ['First Steps'],
     gameHistory: {
       quiz: [
-        { id: '1', score: 70, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', score: 75, totalQuestions: 10, subject: 'English', date: new Date('2024-01-19') }
+        { id: '1', score: 70, totalQuestions: 10, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 15, xpEarned: 140, coinsEarned: 7 },
+        { id: '2', score: 75, totalQuestions: 10, subject: 'English', date: new Date('2024-01-19'), timeSpent: 12, xpEarned: 150, coinsEarned: 7 }
       ],
       flashcards: [
-        { id: '1', cardsStudied: 10, knownCards: 8, subject: 'Mathematics', date: new Date('2024-01-20') },
-        { id: '2', cardsStudied: 8, knownCards: 6, subject: 'English', date: new Date('2024-01-19') }
-      ]
+        { id: '1', cardsStudied: 10, knownCards: 8, subject: 'Mathematics', date: new Date('2024-01-20'), timeSpent: 10, xpEarned: 50, coinsEarned: 1 },
+        { id: '2', cardsStudied: 8, knownCards: 6, subject: 'English', date: new Date('2024-01-19'), timeSpent: 8, xpEarned: 40, coinsEarned: 1 }
+      ],
+      games: []
     }
   },
   {
@@ -597,6 +600,7 @@ export const userDataset: UserData[] = [
     name: 'Ananya Gupta',
     email: 'ananya@student.com',
     password: 'password123',
+    role: 'student',
     standard: 'Class 7',
     grade: 'Class 7',
     joinDate: new Date('2024-01-20'),
@@ -627,10 +631,10 @@ export const userDataset: UserData[] = [
         targetDaily: 5
       },
       subjects: {
-        'Mathematics': { progress: 65, completedLessons: 13, totalLessons: 20, averageScore: 80, lastStudied: new Date() },
-        'Science': { progress: 70, completedLessons: 14, totalLessons: 20, averageScore: 85, lastStudied: new Date() },
-        'English': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 88, lastStudied: new Date() },
-        'Social Studies': { progress: 60, completedLessons: 12, totalLessons: 20, averageScore: 78, lastStudied: new Date() }
+        'Mathematics': { progress: 65, completedLessons: 13, totalLessons: 20, averageScore: 80, lastStudied: new Date(), weeklyProgress: 13, monthlyProgress: 52, totalXP: 650, timeSpent: 100 },
+        'Science': { progress: 70, completedLessons: 14, totalLessons: 20, averageScore: 85, lastStudied: new Date(), weeklyProgress: 14, monthlyProgress: 56, totalXP: 700, timeSpent: 110 },
+        'English': { progress: 75, completedLessons: 15, totalLessons: 20, averageScore: 88, lastStudied: new Date(), weeklyProgress: 15, monthlyProgress: 60, totalXP: 750, timeSpent: 115 },
+        'Social Studies': { progress: 60, completedLessons: 12, totalLessons: 20, averageScore: 78, lastStudied: new Date(), weeklyProgress: 12, monthlyProgress: 48, totalXP: 600, timeSpent: 90 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
@@ -678,13 +682,105 @@ export const userDataset: UserData[] = [
     achievements: ['Science Explorer', 'English Guru', 'Streak Champion'],
     gameHistory: {
       quiz: [
-        { id: '1', score: 82, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-20') },
-        { id: '2', score: 88, totalQuestions: 10, subject: 'English', date: new Date('2024-01-19') }
+        { id: '1', score: 82, totalQuestions: 10, subject: 'Science', date: new Date('2024-01-20'), timeSpent: 14, xpEarned: 164, coinsEarned: 8 },
+        { id: '2', score: 88, totalQuestions: 10, subject: 'English', date: new Date('2024-01-19'), timeSpent: 13, xpEarned: 176, coinsEarned: 8 }
       ],
       flashcards: [
-        { id: '1', cardsStudied: 18, knownCards: 16, subject: 'Science', date: new Date('2024-01-20') },
-        { id: '2', cardsStudied: 14, knownCards: 13, subject: 'English', date: new Date('2024-01-19') }
-      ]
+        { id: '1', cardsStudied: 18, knownCards: 16, subject: 'Science', date: new Date('2024-01-20'), timeSpent: 18, xpEarned: 90, coinsEarned: 3 },
+        { id: '2', cardsStudied: 14, knownCards: 13, subject: 'English', date: new Date('2024-01-19'), timeSpent: 14, xpEarned: 70, coinsEarned: 2 }
+      ],
+      games: []
+    }
+  },
+  // Sample teacher data
+  {
+    id: '6',
+    name: 'Dr. Priya Sharma',
+    email: 'priya@teacher.com',
+    password: 'password123',
+    role: 'teacher',
+    standard: undefined,
+    grade: undefined,
+    joinDate: new Date('2023-09-01'),
+    lastActive: new Date(),
+    isLoggedIn: false,
+    profile: {
+      avatar: '/avatars/priya.jpg',
+      bio: 'Mathematics and Science teacher with 10+ years of experience',
+      preferences: {
+        theme: 'light',
+        notifications: true,
+        sound: true
+      }
+    },
+    stats: {
+      xp: 5000,
+      level: 20,
+      streak: 45,
+      coins: {
+        current: 1000,
+        totalEarned: 1000,
+        totalSpent: 0,
+        history: []
+      },
+      totalQuizzes: 0,
+      totalFlashcards: 0,
+      averageScore: 0,
+      lastLoginDate: new Date(),
+      dailyGoalProgress: {
+        quizzesCompleted: 0,
+        flashcardsCompleted: 0,
+        gamesPlayed: 0,
+        targetDaily: 0
+      },
+      subjects: {
+        'Mathematics': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Science': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'English': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Social Studies': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 }
+      },
+      dailyCheckins: {},
+      weeklyActivity: {},
+      monthlyProgress: {},
+      recentActivities: [],
+      learningStreak: {
+        currentStreak: 45,
+        longestStreak: 45,
+        lastStudyDate: new Date(),
+        consecutiveDays: 45,
+        streakBonus: 450,
+        streakHistory: []
+      },
+      dailyGoals: {
+        current: {
+          quizzes: 0,
+          flashcards: 0,
+          games: 0,
+          studyTime: 0,
+          xpTarget: 0
+        },
+        completed: {
+          quizzes: 0,
+          flashcards: 0,
+          games: 0,
+          studyTime: 0,
+          xpTarget: 0
+        },
+        history: []
+      },
+      timeTracking: {
+        totalStudyTime: 0,
+        dailyAverage: 0,
+        weeklyTotal: 0,
+        monthlyTotal: 0,
+        sessionHistory: []
+      }
+    },
+    achievements: ['Teaching Excellence', 'Student Mentor', 'Innovation Leader'],
+    gameHistory: {
+      quiz: [],
+      flashcards: [],
+      games: []
     }
   }
 ];
@@ -729,7 +825,7 @@ export const authenticateUser = (email: string, password: string): UserData | nu
   return null;
 };
 
-export const createUser = (userData: Omit<UserData, 'id' | 'joinDate' | 'lastActive' | 'isLoggedIn' | 'stats' | 'achievements' | 'gameHistory'>): UserData => {
+export const createUser = (userData: Omit<UserData, 'id' | 'joinDate' | 'lastActive' | 'isLoggedIn' | 'stats' | 'achievements' | 'gameHistory'> & { role: 'student' | 'teacher' }): UserData => {
   const newUser: UserData = {
     ...userData,
     id: (userDataset.length + 1).toString(),
@@ -751,11 +847,16 @@ export const createUser = (userData: Omit<UserData, 'id' | 'joinDate' | 'lastAct
         gamesPlayed: 0,
         targetDaily: 3
       },
-      subjects: {
-        'Mathematics': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date() },
-        'Science': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date() },
-        'English': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date() },
-        'Social Studies': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date() }
+      subjects: userData.role === 'teacher' ? {
+        'Mathematics': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Science': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'English': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Social Studies': { progress: 0, completedLessons: 0, totalLessons: 0, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 }
+      } : {
+        'Mathematics': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Science': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'English': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 },
+        'Social Studies': { progress: 0, completedLessons: 0, totalLessons: 20, averageScore: 0, lastStudied: new Date(), weeklyProgress: 0, monthlyProgress: 0, totalXP: 0, timeSpent: 0 }
       },
       dailyCheckins: {},
       weeklyActivity: {},
