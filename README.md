@@ -12,7 +12,7 @@ A modern, AI-powered educational dashboard that transforms PDF content into inte
 - **Study Analytics**: Detailed insights into your study patterns
 
 ### 🎮 Educational Games
-- **Math Puzzles**: Interactive mathematical challenges
+- **Math Puzzles**: Interactive mathematical challenges,and interesting mathematical puzzle 
 - **Pictionary**: Visual learning through drawing
 - **Hangman**: Word-based learning games
 - **Spelling Bee**: Improve spelling and vocabulary
